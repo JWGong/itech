@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="single_product" style="margin-top: 30px" class="single_product_page animate__animated animate__fadeInUp">
+
+        <!-- single product header area -->
+
+        <!-- single product img and detail -->
+
+        <div class="container custom_container sp_pro_container ">
+            <div class="row sh_page">
+                <div class="col-xl-5 col-md-6 col-12">
+                    <div id="content" class="page-content">
+
+
+                        <div id="photo-view-container">
+                            <div id="photo-display" class="gallery"></div>
+                            <div id="left" onclick=leftRight(this)></div>
+                            <div id="photo-container-holder">
+                                <div id="photo-container" style="margin-left:0;">
+                                    <img style="width: 100%;"
+                                         src="{{ dish.img }}">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-xl-7 col-md-6 col-12">
+
+                    <div class="sp_product_detail">
+
+                        <h1 class="font-weight-bold text-uppercase"><a href="#">{{ dish.name }}</a></h1>
+
+                        <span class="sp_price font-weight-bold">$500.00</span>
+
+                        <div class="text-secondary sp_tax">Tax included.</div>
+                        <div class="sp_rating">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                        </div>
+                        <div class="sp_add_info my-3">
+                            <ul>
+                                <li class="sku my-2">
+                                    <span class="text-uppercase font-weight-bolder">calorie:</span>
+                                    <span>466</span>
+                                </li>
+                                <li class="sku my-2">
+                                    <span class="text-uppercase font-weight-bolder">protein:</span>
+                                    <span>39</span>
+                                </li>
+
+                                <li class="sku my-2">
+                                    <span class="text-uppercase font-weight-bolder">carbohydrates:</span>
+                                    <span>44</span>
+                                </li>
+                                <li class="sku my-2">
+                                    <span class="text-uppercase font-weight-bolder">fat:</span>
+                                    <span>15</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="sp_text">
+                            <ul>
+                                <li class="my-2">{{ dish.description }}
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container custom_container t_pro_container fadeInUp">
+            <div class="row">
+                <div class="col-12">
+                    <div class="title_outer">
+                        <h5 class="font-weight-bolder mb-4 d-inline-block pr-3"><span class="text-danger">Reviews</span>
+                        </h5>
+                    </div> <!-- title_outer -->
+                </div> <!-- col-12 -->
+            </div> <!-- row -->
+
+            <div style="display: flex;flex-direction: column;width: 100%;align-items:flex-end;margin:10px 0">
+                <input type="text" id="dishId" value="{{ dish.id }}" hidden/>
+                <textarea id="comments" class="rounded"
+                          style="width: 100%;height: 90px;border: 1px solid  #dcdee2"></textarea>
+                <button onclick="addComments()" class="rounded" style="margin: 5px;border: none;padding: 5px 20px;">
+                    Comment
+                </button>
+            </div>
+
+
+            <div id="review_data">
+                {% for c in comments %}
+                    <div class="comment-item">
+                        <div class="comment-info">
+                            <img src="https://img0.baidu.com/it/u=3311900507,1448170316&fm=26&fmt=auto&gp=0.jpg"/>
+                            <div>
+                                <span>{{ c.user.username }}</span>
+                                <span class="timer">{{ c.addTime }}</span>
+                            </div>
+                        </div>
+                        <div class="comment-content">{{ c.comments }}</div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+
+    </div> <!-- single_product_page -->
+    <script>
+
+
+        function addComments() {
+            let dishId = $("#dishId").val();
+            let comments = $("#comments").val();
+            if (comments) {
+                $.post("{% url 'dish' %}", {dishId, comments, csrfmiddlewaretoken: '{{ csrf_token }}'}, function (res) {
+                    let reviewData = res.reviewData;
+                    $("#review_data").prepend(
+                        ` <div class="comment-item">
+                    <div class="comment-info">
+                        <img src="https://img0.baidu.com/it/u=3311900507,1448170316&fm=26&fmt=auto&gp=0.jpg"/>
+                        <div>
+                            <span>${reviewData.username}</span>
+                            <span class="timer">${reviewData.datetime}</span>
+                        </div>
+                    </div>
+                    <div class="comment-content">${reviewData.content}</div>
+                </div>`
+                    )
+                })
+            }
+        }
+    </script>
+{% endblock %}

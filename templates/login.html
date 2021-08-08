@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div id="login_page" class="login-page animate__animated animate__fadeInUp">
+
+
+        <div style="margin-top: 30px" class="container custom_container ">
+            <h3 class="text-center">Log in to your account </h3>
+            <div id="login" class="page-content card card-block p-3 p-sm-4 ">
+                <form action="{% url 'login' %}" class="needs-validation " method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="user_email" class="font-weight-bolder">Username</label>
+                        <input name="username" type="text" class="form-control" id="user_email"
+                               required>
+
+                    </div>
+
+                    <div class="form-group font-weight-bolder">
+                        <label for="user_password" class="font-weight-bolder">Password</label>
+                        <input name="password" type="password" class="form-control" id="user_password" required>
+                        <div style="color: red;font-weight: bold;margin: 1px 0">{{ error }}</div>
+                    </div>
+
+
+                    <input type="submit" name="submit" class="btn btn-primary mb-3" value="submit">
+                    <div class="pass_acc border-top pt-3">
+                        <span class="no_account float-right font-weight-bolder"><a href="{% url 'register' %}">No account? Create one here</a></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>    <!-- login_page -->
+{% endblock %}

@@ -1,0 +1,140 @@
+{% load  staticfiles %}
+<!DOCTYPE html>
+<html class="" lang="en">
+<head>
+    <title>Online Restaurant</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/fontawesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/Favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.css' %}">
+
+</head>
+<body>
+
+
+<header>
+    <!-- second row -->
+    <div class="header-top py-4 border-bottom bg-white sticky-md-top">
+        <div class="container custom_container header-top-container">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2 col-6  head-logo">
+                    <div class="text-left header-top-left pt-2"><a href="{% url 'home' %}"><img
+                            src="{% static 'img/Hitech..png' %}"
+                            class="img-responsive img"
+                            alt="Hitech"></a></div>
+                </div> <!-- col-xl-2 col-lg-2 col-md-2 col-sm-3 head-logo -->
+                <div class="col-xl-9 col-lg-10 col-6  head-search">
+                    <div class="d-flex navbar">
+                        <div class="input-class  text-left col-xl-8 col-lg-7 col-md-12  ">
+                            <div class="between-header border border-danger rounded mb-0 head-left">
+                                <form action="{% url 'search' %}" method="post" class="input-group">
+                                    {% csrf_token %}
+                                    <input type="text" name="keyword" placeholder="search" class="form-control" aria-label="search"
+                                           aria-describedby="button-addon2">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-danger text-uppercase font-weight-normal">
+                                            search
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- between-header text-left col-sm-8 head-left border border-danger rounded mb-0 -->
+                        </div>
+
+                        <div style="display: flex;flex-direction: row;align-items: center;justify-content: flex-end"
+                             class="col-xl-4 col-lg-5 head-right text-right">
+                            <ul>
+                                {% if request.user.is_authenticated %}
+                                    <li class="md_compare d-lg-inline-block">
+                                        <a href="#">
+                                            <span class="comp_wish align-middle d-lg-inline-block font-weight-bolder">Hello {{ request.user.username }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'logout' %}">
+                                            <span class="comp_wish align-middle d-lg-inline-block font-weight-bolder">logout</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="md_compare d-lg-inline-block">
+                                        <a href="{% url 'login' %}">
+                                            <span class="comp_wish align-middle d-lg-inline-block font-weight-bolder">Please Login</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div> <!-- col-sm-4 head-right text-right -->
+
+                    </div> <!-- row -->
+                </div> <!-- col-xl-10 col-lg-10 col-md-10 col-sm-12 col-12 head-search -->
+            </div> <!-- row -->
+        </div> <!--  container custom_container -->
+    </div> <!-- header-top py-4 border-bottom bg-white -->
+
+    <!-- third row -->
+
+    <div class="header_bottom shadow-sm bg-white rounded bg-white d-md-none d-sm-none d-none d-lg-block">
+        <div class="container custom_container">
+            <div class="row">
+                <div class="col-lg-9 text-left">
+                    <ul class="main-menu navbar">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+
+
+                    </ul>
+                </div> <!-- col-lg-9 text-left -->
+                <div class="col-lg-3 text-right">
+                    <a href="" class="text-uppercase">Welcome!</a>
+                </div> <!-- col-lg-3 text-right -->
+            </div> <!-- row -->
+        </div> <!-- container custom_container -->
+    </div> <!-- header_bottom shadow-sm bg-white rounded bg-white -->
+
+</header> <!-- header -->
+{% block content %}
+
+{% endblock %}
+<div class="footer my-footer animate__animated animate__fadeInUp">
+
+    <div class="fifth_footer">
+        <div class="container custom_container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center demo_link d-block">2020 @ All rights reserved Powered by <a href="#">demo.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- row first_footer -->
+</div> <!-- footer -->
+
+
+<a href="#" id="scroll"></a>
+<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/all.min.js' %}"></script>
+<script src="{% static 'js/index.js' %}"></script>
+<script src="{% static 'js/wow.min.js' %}"></script>
+
+
+</body>
+</html>
+
+
+
+
+
+       
+
